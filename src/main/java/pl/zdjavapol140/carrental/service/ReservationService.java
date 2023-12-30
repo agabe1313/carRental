@@ -8,6 +8,7 @@ import pl.zdjavapol140.carrental.repository.BranchRepository;
 import pl.zdjavapol140.carrental.repository.CarRepository;
 import pl.zdjavapol140.carrental.repository.CustomerRepository;
 import pl.zdjavapol140.carrental.repository.ReservationRepository;
+import pl.zdjavapol140.carrental.service.reservationManagement.AdjacentReservationsWrapper;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -689,16 +690,16 @@ public class ReservationService {
                 .min(Comparator.comparing(Reservation::getPickUpDateTime));
     }
 
-//    public void cancelReservation(Long reservationToCancelId) {
-//
-//        Reservation reservationToCancel = this.findReservationById(reservationToCancelId);
-//        Car car = reservationToCancel.getCar();
-//
-//        Optional<Reservation> optionalNextReservation = this.findNotCanceledNextReservationAfter(car.getId(), reservationToCancel.getDropOffDateTime());
-//        Optional<Reservation> optionalPreviousReservation = this.findNotCancelledPreviousReservationBefore(car.getId(), reservationToCancel.getPickUpDateTime());
-//
-//        switch (optionalPreviousReservation, optionalNextReservation)
-//    }
+    public AdjacentReservationsWrapper createAdjacentReservationWrapper(Long reservationToCancelId) {
+
+        Reservation reservationToCancel = this.findReservationById(reservationToCancelId);
+        Car car = reservationToCancel.getCar();
+
+        Optional<Reservation> optionalPreviousReservation = this.findNotCancelledPreviousReservationBefore(car.getId(), reservationToCancel.getPickUpDateTime());
+        Optional<Reservation> optionalNextReservation = this.findNotCanceledNextReservationAfter(car.getId(), reservationToCancel.getDropOffDateTime());
+
+        return new AdjacentReservationsWrapper(optionalPreviousReservation, optionalNextReservation);
+    }
 
     //TODO może kiedyś: Optymalizacja wykorzystania floty; Samochód jak najkrócej stoi bezczynnie; Ograniczony czasowo status samochodu UNAVAILABLE w związku z przeglądem/naprawą
 

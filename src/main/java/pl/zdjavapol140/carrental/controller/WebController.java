@@ -17,6 +17,7 @@ import pl.zdjavapol140.carrental.service.BranchService;
 import pl.zdjavapol140.carrental.service.CarService;
 import pl.zdjavapol140.carrental.service.CustomerService;
 import pl.zdjavapol140.carrental.service.ReservationService;
+import pl.zdjavapol140.carrental.service.reservationManagement.ReservationManagerProvider;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -76,6 +77,12 @@ public class WebController {
         return "cars-list";
     }
 
+//    @PostMapping("/reservations/manage")
+//    public String cancelReservation(@RequestParam Long reservationId) {
+//        reservationService.createAdjacentReservationWrapper(reservationId);
+//        ReservationManagerProvider provider = new ReservationManagerProvider();
+//        provider.findStrategy(reservationService.createAdjacentReservationWrapper(reservationId));
+//    }
 
     @GetMapping("/preselect-car")
 

@@ -15,11 +15,11 @@ private final List<ReservationManagerStrategy> strategies;
         this.strategies = strategies;
     }
 
-    public ReservationManagerStrategy findStrategy(List<ReservationManagerStrategy> strategies, ReservationWrapper reservationWrapper) {
+    public ReservationManagerStrategy findStrategy(AdjacentReservationsWrapper adjacentReservationsWrapper) {
 
         return strategies
                 .stream()
-                .filter(s -> s.isAppropriate(reservationWrapper))
+                .filter(s -> s.isAppropriate(adjacentReservationsWrapper))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Strategy not found"));
     }
